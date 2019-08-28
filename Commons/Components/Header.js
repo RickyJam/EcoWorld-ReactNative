@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {
     View,
-    StyleSheet,
+    StyleSheet, SafeAreaView,
 } from 'react-native';
 
 import {Icon, Text} from 'react-native-elements'
@@ -10,7 +10,7 @@ import {Icon, Text} from 'react-native-elements'
 export default class Header extends Component {
 
     state = {
-        iconSize: 30
+        iconSize: 40
     }
 
 
@@ -19,12 +19,15 @@ export default class Header extends Component {
             ///*<Icon name='menu' onPress={openMenuSection()}/>  ICONA DELL'APPLICAZIONE*/
         }
         return (
-            <View style={styles.Header}>
-                <Icon style={styles.Icon} name='menu' size={this.state.iconSize}/>
-                <View style={styles.Title}>
-                    <Text style={styles.TitleText}> EcoWorld</Text>
+            <View>
+                <View style={styles.Header}>
+                    <Icon style={styles.Icon} name='menu' size={this.state.iconSize}/>
+                    <View style={styles.Title}>
+                        <Text style={styles.TitleText}> EcoWorld </Text>
+                    </View>
+                    <Icon style={styles.ButtonMenu} name='menu' size={this.state.iconSize} onPress={() => alert("menu openned!")}/>
                 </View>
-                <Icon style={styles.ButtonMenu} name='menu' size={this.state.iconSize} onPress={() => alert("menu openned!")}/>
+                <View style={styles.ViewBorder}/>
             </View>
         )
     }
@@ -40,13 +43,18 @@ const  styles = StyleSheet.create({
     },
     Title: {
         flex : 6,
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     TitleText: {
         color: 'green',
-        fontSize: 20
+        fontSize: 25,
     },
     ButtonMenu: {
         flex : 2
-    }
+    },
+    ViewBorder:{
+        borderBottomWidth: 1,
+        borderBottomColor: 'gray'
+    },
 });
