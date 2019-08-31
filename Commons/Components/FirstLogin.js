@@ -76,11 +76,7 @@ const styles = StyleSheet.create({
         borderRadius: 3
     },
     button: {
-        //flex:1,
-        backgroundColor: '#299A02',
-        //alignSelf: 'flex-end',
-        //position: 'absolute',
-        //bottom: 35,
+        backgroundColor: '#299A02'
     },
     buttonContainer:{
         flex: 1,

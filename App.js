@@ -3,8 +3,6 @@ import {
     View,
     SafeAreaView,
     StyleSheet,
-    ScrollView,
-    Text
 } from 'react-native';
 
 import Header from './Commons/Components/Header'
@@ -18,40 +16,47 @@ export default class App extends Component {
     }
 
     state = {
-        isFirstLogin: true,
+        //isFirstLogin: true,
         city: ''
     }
 
-    promisedSetState = (newState) => {
-        return new Promise((resolve) => {
-            this.setState(newState, () => {
-                resolve()
-            });
-        });
-    }
-
     changeView = (city) => {
+        AsyncStorage.setItem("city", city);
         this.setState({
-            isFirstLogin: false,
             city: city
-        },() => {
-            alert('you did it, call back')
         })
 
+    }
+
+    isAlreadyJoined = () =>{
+        try {
+
+            AsyncStorage.getItem("city").then((city) => {
+                if(city !== undefined && city !== null && city !== '')
+                    this.setState({
+                        city: city
+                    })
+                else
+                    return null
+            }).done();
+
+        }catch (e) {
+            return false;
+        }
     }
 
     render() {
 
         let mainComponent = null
-        if(this.state.isFirstLogin)
-            mainComponent = (<View style={styles.firstLoginContainer} >
+        if(this.isAlreadyJoined())
+            mainComponent = (
+                <View style={styles.firstLoginContainer} >
                 <FirstLogin style={styles.firstLogin} changeView={this.changeView}/>
-                </View>);
+                </View>)
+            ;
         else
             mainComponent = (
-                <ScrollView contentContainerStyle={{flexGrow: 1}} style={styles.scrollViewArea}>
-                    <HomePage city={this.state.city}/>
-                </ScrollView>
+                <HomePage style={styles.firstLogin} city={this.state.city}/>
             )
 
         return (
