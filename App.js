@@ -2,63 +2,74 @@ import React, {Fragment, Component} from 'react';
 import {
     View,
     SafeAreaView,
-    StyleSheet,
+    StyleSheet
 } from 'react-native';
+
+import AsyncStorage from '@react-native-community/async-storage';
 
 import Header from './Commons/Components/Header'
 import FirstLogin from "./Commons/Components/FirstLogin"
 import HomePage from "./Commons/Components/HomePage";
+import temporalUndefined from "@babel/runtime/helpers/esm/temporalUndefined";
 
 export default class App extends Component {
 
     constructor(props) {
         super(props)
+        this.isFirstLog()
     }
 
     state = {
-        //isFirstLogin: true,
+        isFirstLogin: undefined,
         city: ''
     }
 
     changeView = (city) => {
         AsyncStorage.setItem("city", city);
         this.setState({
-            city: city
+            city: city,
+            isFirstLogin: false
         })
 
     }
 
-    isAlreadyJoined = () =>{
+    componentDidMount(): void {
+    }
+
+
+
+    isFirstLog = async () => {
         try {
-
-            AsyncStorage.getItem("city").then((city) => {
-                if(city !== undefined && city !== null && city !== '')
+            let result = true
+            await AsyncStorage.getItem("city").then((city) => {
+                if (city !== undefined && city !== null && city !== '') {
+                   this.changeView(city)
+                } else {
                     this.setState({
-                        city: city
+                        isFirstLogin: false
                     })
-                else
-                    return null
+                }
             }).done();
-
-        }catch (e) {
-            return false;
+        } catch (e) {
+            console.log('error logged in isAlreadyJoined()')
         }
     }
+
 
     render() {
 
         let mainComponent = null
-        if(this.isAlreadyJoined())
+        if(this.state.isFirstLogin === true)
             mainComponent = (
                 <View style={styles.firstLoginContainer} >
-                <FirstLogin style={styles.firstLogin} changeView={this.changeView}/>
+                    <FirstLogin style={styles.firstLogin} changeView={this.changeView}/>
                 </View>)
             ;
-        else
+        else if(this.state.isFirstLogin === false) {
             mainComponent = (
                 <HomePage style={styles.firstLogin} city={this.state.city}/>
             )
-
+        }
         return (
             <Fragment>
               <SafeAreaView style={styles.SafeAreaMain}>

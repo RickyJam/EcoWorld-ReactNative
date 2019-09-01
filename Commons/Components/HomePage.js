@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {View, StyleSheet, Text, ScrollView} from 'react-native'
+import DayCmp from "./DayCmp";
 
 export default class HomePage extends Component {
 
@@ -16,9 +17,11 @@ export default class HomePage extends Component {
                     </Text>
                 </View>
 
-                <ScrollView contentContainerStyle={{flexGrow: 1}} style={styles.scrollViewArea}>
-
-                </ScrollView>
+                <View style={styles.scrollViewContainer}>
+                    <ScrollView contentContainerStyle={{flexGrow: 8}} style={styles.scrollViewArea}>
+                        <DayCmp/>
+                    </ScrollView>
+                </View>
             </View>
         );
     }
@@ -33,16 +36,18 @@ const styles = StyleSheet.create({
     cityContainer:{
         alignItems: 'center',
         flex: 1,
-        borderWidth: 2,
-        borderColor: 'black'
+        justifyContent: 'center'
     },
     city:{
         fontWeight: 'bold',
-        flex: 1
+        fontSize: 20
     },
     scrollViewArea:{
-        flex:8,
+        //flex:8,
         borderColor: 'red',
         borderWidth: 2
+    },
+    scrollViewContainer:{
+        flex:8
     }
 })
