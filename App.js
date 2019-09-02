@@ -9,8 +9,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 import Header from './Commons/Components/Header'
 import FirstLogin from "./Commons/Components/FirstLogin"
-import HomePage from "./Commons/Components/HomePage";
-import temporalUndefined from "@babel/runtime/helpers/esm/temporalUndefined";
+import HomePage from "./Commons/Components/HomePage"
+import MenuRight from "./Commons/Components/MenuRight"
 
 export default class App extends Component {
 
@@ -21,7 +21,8 @@ export default class App extends Component {
 
     state = {
         isFirstLogin: undefined,
-        city: ''
+        city: '',
+        showMenu: false
     }
 
     changeView = (city) => {
@@ -31,6 +32,12 @@ export default class App extends Component {
             isFirstLogin: false
         })
 
+    }
+
+    showMenu = () => {
+        this.setState({
+          showMenu: !this.state.showMenu
+        })
     }
 
     componentDidMount(): void {
@@ -70,10 +77,17 @@ export default class App extends Component {
                 <HomePage style={styles.firstLogin} city={this.state.city}/>
             )
         }
+        let menuRight = null
+        if(this.state.showMenu)
+            menuRight = (
+                <MenuRight/>
+            )
+
         return (
             <Fragment>
               <SafeAreaView style={styles.SafeAreaMain}>
-                  <Header/>
+                  <Header showMenu={this.showMenu}/>
+                  {menuRight}
                   {mainComponent}
               </SafeAreaView>
             </Fragment>
@@ -103,4 +117,9 @@ const styles = StyleSheet.create({
     firstLogin: {
         flex:5,
     },
+    menu:{
+        position: 'absolute',
+        top: 0,
+        right: 0
+    }
 });

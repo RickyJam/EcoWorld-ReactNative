@@ -2,6 +2,9 @@ import React, {Component} from 'react'
 import {View, StyleSheet, Text, ScrollView} from 'react-native'
 import DayCmp from "./DayCmp";
 
+import {ReactNavigation} from 'react-navigation'
+
+
 export default class HomePage extends Component {
 
     constructor(){
@@ -25,8 +28,11 @@ export default class HomePage extends Component {
             </View>
         );
     }
-
 }
+
+const AppDrawerNavigation = createDrawerNavigation({
+
+})
 
 const styles = StyleSheet.create({
     homePageContainer:{

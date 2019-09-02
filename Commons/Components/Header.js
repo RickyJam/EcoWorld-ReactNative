@@ -25,7 +25,7 @@ export default class Header extends Component {
                     <View style={styles.Title}>
                         <Text style={styles.TitleText}> EcoWorld </Text>
                     </View>
-                    <Icon style={styles.ButtonMenu} name='menu' size={this.state.iconSize} onPress={() => alert("menu openned!")}/>
+                    <Icon style={styles.ButtonMenu} name='menu' size={this.state.iconSize} onPress={() => this.props.showMenu}/>
                 </View>
                 <View style={styles.ViewBorder}/>
             </View>
