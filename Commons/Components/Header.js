@@ -14,6 +14,10 @@ export default class Header extends Component {
     }
 
 
+    openModal = () =>{
+        this.props.showModal()
+    }
+
     render() {
         function openMenuSection(){
             ///*<Icon name='menu' onPress={openMenuSection()}/>  ICONA DELL'APPLICAZIONE*/
@@ -25,7 +29,7 @@ export default class Header extends Component {
                     <View style={styles.Title}>
                         <Text style={styles.TitleText}> EcoWorld </Text>
                     </View>
-                    <Icon style={styles.ButtonMenu} name='menu' size={this.state.iconSize} onPress={() => this.props.showMenu}/>
+                    <Icon style={styles.ButtonMenu} name='menu' size={this.state.iconSize} onPress={() => this.openModal()}/>
                 </View>
                 <View style={styles.ViewBorder}/>
             </View>

@@ -5,6 +5,8 @@ import {
     StyleSheet
 } from 'react-native';
 
+//import { createAppContainer } from 'react-navigation';
+//import { createStackNavigator } from 'react-navigation-stack';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import Header from './Commons/Components/Header'
@@ -22,7 +24,7 @@ export default class App extends Component {
     state = {
         isFirstLogin: undefined,
         city: '',
-        showMenu: false
+        modalVisible: false
     }
 
     changeView = (city) => {
@@ -34,9 +36,9 @@ export default class App extends Component {
 
     }
 
-    showMenu = () => {
+    showModal = () => {
         this.setState({
-          showMenu: !this.state.showMenu
+          modalVisible: !this.state.modalVisible
         })
     }
 
@@ -47,13 +49,12 @@ export default class App extends Component {
 
     isFirstLog = async () => {
         try {
-            let result = true
             await AsyncStorage.getItem("city").then((city) => {
                 if (city !== undefined && city !== null && city !== '') {
                    this.changeView(city)
                 } else {
                     this.setState({
-                        isFirstLogin: false
+                        isFirstLogin: true
                     })
                 }
             }).done();
@@ -66,7 +67,7 @@ export default class App extends Component {
     render() {
 
         let mainComponent = null
-        if(this.state.isFirstLogin === true)
+        if(this.state.isFirstLogin)
             mainComponent = (
                 <View style={styles.firstLoginContainer} >
                     <FirstLogin style={styles.firstLogin} changeView={this.changeView}/>
@@ -77,18 +78,15 @@ export default class App extends Component {
                 <HomePage style={styles.firstLogin} city={this.state.city}/>
             )
         }
-        let menuRight = null
-        if(this.state.showMenu)
-            menuRight = (
-                <MenuRight/>
-            )
 
         return (
             <Fragment>
               <SafeAreaView style={styles.SafeAreaMain}>
-                  <Header showMenu={this.showMenu}/>
-                  {menuRight}
+                  <Header showModal={this.showModal}/>
                   {mainComponent}
+
+                  <MenuRight showModal={this.showModal} modalVisible={this.state.modalVisible}/>
+
               </SafeAreaView>
             </Fragment>
         );

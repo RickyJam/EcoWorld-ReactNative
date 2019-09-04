@@ -16,7 +16,7 @@ export default class FirstLogin extends Component {
     }
 
     validateChangeView = () => {
-        //controlli sul comune inserito
+        //TODO controlli sul comune inserito
         this.props.changeView(this.state.city)
     }
 

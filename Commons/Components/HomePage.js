@@ -2,16 +2,34 @@ import React, {Component} from 'react'
 import {View, StyleSheet, Text, ScrollView} from 'react-native'
 import DayCmp from "./DayCmp";
 
-import {ReactNavigation} from 'react-navigation'
-
 
 export default class HomePage extends Component {
 
     constructor(){
         super()
+
     }
 
+    state ={
+        dayCmp: [{
+            title: 'Umido',
+            date: '02/09/2019'
+        },{
+            title: 'Vetro',
+            date: '03/09/2019'
+        }]
+    }
+
+
     render() {
+        let dayList = []
+
+        for(let i = 0; i < this.state.dayCmp.length; i++){
+            dayList.push(
+                <DayCmp dayCmp={this.state.dayCmp[i]} key={'cmp-' + i}/>
+            )
+        }
+
         return (
             <View style={styles.homePageContainer}>
                 <View style={styles.cityContainer}>
@@ -22,17 +40,13 @@ export default class HomePage extends Component {
 
                 <View style={styles.scrollViewContainer}>
                     <ScrollView contentContainerStyle={{flexGrow: 8}} style={styles.scrollViewArea}>
-                        <DayCmp/>
+                        {dayList}
                     </ScrollView>
                 </View>
             </View>
         );
     }
 }
-
-const AppDrawerNavigation = createDrawerNavigation({
-
-})
 
 const styles = StyleSheet.create({
     homePageContainer:{
@@ -42,7 +56,11 @@ const styles = StyleSheet.create({
     cityContainer:{
         alignItems: 'center',
         flex: 1,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        borderColor: 'green',
+        borderBottomWidth: 2,
+        marginLeft: 5,
+        marginRight: 5
     },
     city:{
         fontWeight: 'bold',
@@ -50,10 +68,11 @@ const styles = StyleSheet.create({
     },
     scrollViewArea:{
         //flex:8,
-        borderColor: 'red',
-        borderWidth: 2
+
     },
     scrollViewContainer:{
         flex:8
     }
 })
+
+
